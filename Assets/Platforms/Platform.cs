@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEditor;
 
 public class Platform : MonoBehaviour
 {
@@ -16,13 +17,37 @@ public class Platform : MonoBehaviour
 
     private void MatchColliderToSpriteSize(SpriteRenderer spriteRenderer)
     {
-        BoxCollider2D coll = this.GetComponent<BoxCollider2D>();
-        if (coll == null)
+        BoxCollider2D mainColl = this.GetComponent<BoxCollider2D>();
+        BoxCollider2D leftSideColl = this.GetComponent<BoxCollider2D>();
+        BoxCollider2D rightSidColl = this.GetComponent<BoxCollider2D>();
+        PhysicsMaterial2D platformMaterial =   Resources.Load<PhysicsMaterial2D>("Materials/Platform_Main");
+        PhysicsMaterial2D platformSideMaterial =  Resources.Load<PhysicsMaterial2D>("Materials/Platform_Side");
+
+        if (mainColl == null)
         {
-            coll = this.gameObject.AddComponent(typeof(BoxCollider2D)) as BoxCollider2D;
+            mainColl = this.gameObject.AddComponent(typeof(BoxCollider2D)) as BoxCollider2D;
+            mainColl.sharedMaterial = platformMaterial;
+        }
+          
+        if (leftSideColl == null)
+        {
+            leftSideColl = this.gameObject.AddComponent(typeof(BoxCollider2D)) as BoxCollider2D;
+            leftSideColl.sharedMaterial = platformSideMaterial;
+        }
+          
+        if (rightSidColl == null)
+        {
+            rightSidColl = this.gameObject.AddComponent(typeof(BoxCollider2D)) as BoxCollider2D;
+            rightSidColl.sharedMaterial = platformSideMaterial;
         }
 
-        coll.size = spriteRenderer.size;
-        coll.offset = 0.5f * spriteRenderer.size.y * Vector2.up;
+        mainColl.size = spriteRenderer.size;
+        mainColl.offset = 0.5f * spriteRenderer.size.y * Vector2.up;
+
+        leftSideColl.size = new Vector2( 0.1f , spriteRenderer.size.y );
+        leftSideColl.offset = new Vector2(-0.5f * spriteRenderer.size.x,0.5f * spriteRenderer.size.y);
+
+        rightSidColl.size = new Vector2( 0.1f , spriteRenderer.size.y );
+        rightSidColl.offset = new Vector2(0.5f * spriteRenderer.size.x,0.5f * spriteRenderer.size.y);
     }
 }
