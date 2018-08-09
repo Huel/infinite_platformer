@@ -113,6 +113,10 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &57848172 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 100002, guid: 87a2357765801c34292d6718d8b4d770, type: 2}
+  m_PrefabInternal: {fileID: 1784303674}
 --- !u!1 &75107493
 GameObject:
   m_ObjectHideFlags: 0
@@ -190,6 +194,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64e4a493f8b65114dbc343bc7e812471, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerCharacter: {fileID: 57848172}
   playerLives: 0
 --- !u!1001 &775585762
 Prefab:
@@ -200,11 +205,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400000, guid: a038b284634e29f4aaf058814aa61a6f, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -24.3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: a038b284634e29f4aaf058814aa61a6f, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -5.67
+      value: -9.4
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: a038b284634e29f4aaf058814aa61a6f, type: 2}
       propertyPath: m_LocalPosition.z
@@ -231,7 +236,7 @@ Prefab:
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: a038b284634e29f4aaf058814aa61a6f, type: 2}
-      propertyPath: GameController
+      propertyPath: playManager
       value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
