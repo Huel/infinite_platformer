@@ -122,6 +122,7 @@ GameObject:
   m_Component:
   - component: {fileID: 75107495}
   - component: {fileID: 75107494}
+  - component: {fileID: 75107496}
   m_Layer: 0
   m_Name: PlayManager
   m_TagString: Untagged
@@ -178,6 +179,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &75107496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 75107493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64e4a493f8b65114dbc343bc7e812471, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerLives: 0
 --- !u!1001 &775585762
 Prefab:
   m_ObjectHideFlags: 0
@@ -216,6 +229,10 @@ Prefab:
     - target: {fileID: 400000, guid: a038b284634e29f4aaf058814aa61a6f, type: 2}
       propertyPath: m_RootOrder
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: a038b284634e29f4aaf058814aa61a6f, type: 2}
+      propertyPath: GameController
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a038b284634e29f4aaf058814aa61a6f, type: 2}
