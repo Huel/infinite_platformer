@@ -17,6 +17,7 @@ namespace UnityStandardAssets._2D
 		public GameObject mainCamera;
 
 		private Transform mainCameraTransform;
+		private Vector3 velocity = Vector3.zero;
 
 
 		// Use this for initialization
@@ -47,10 +48,9 @@ namespace UnityStandardAssets._2D
 			}
 			else
 				newPositionX -=GameConstants.CAMERA_OFFSET;
-				
-			
 
-			mainCameraTransform.position = new Vector3(newPositionX,mainCameraTransform.gameObject.transform.position.y,mainCameraTransform.gameObject.transform.position.z);
+			Vector3 targetPosition = new Vector3(newPositionX,playerCharacterTransform.position.y,mainCameraTransform.gameObject.transform.position.z);
+			mainCameraTransform.position = Vector3.SmoothDamp(mainCameraTransform.position,targetPosition,ref velocity,GameConstants.CAMERA_SMOOTH_TIME);
 		}
 		public void RespawnPlayer()
 		{
