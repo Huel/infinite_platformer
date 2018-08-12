@@ -30,9 +30,9 @@ namespace UnityStandardAssets._2D
 			playerController = playerCharacter.GetComponent<PlatformerCharacter2D>();
 			
 			if(!mainCamera)
-				playerCharacter = GameObject.Find("MainCamera");
+				mainCamera = GameObject.Find("MainCamera");
 
-			 mainCameraTransform = playerCharacter.GetComponent<Transform>();
+			 mainCameraTransform = mainCamera.GetComponent<Transform>();
 
 			playerLives = GameConstants.PLAYER_LIVES;
 		}
