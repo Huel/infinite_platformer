@@ -8,7 +8,8 @@ public class Platform : MonoBehaviour
         this.tag = GameplayConstants.TAG_Ground;    // If you get an error here, create a Tag in Unity called "Ground".
         //See the GameplayConstants.cs file for other required Tags and Layers.
         
-        SpriteRenderer spriteRenderer = this.GetComponent<SpriteRenderer> ();
+        SpriteRenderer spriteRenderer = this.GetComponent<SpriteRenderer>();
+
 		if (spriteRenderer != null)
 		{
             MatchColliderToSpriteSize(spriteRenderer);
@@ -17,29 +18,29 @@ public class Platform : MonoBehaviour
 
     private void MatchColliderToSpriteSize(SpriteRenderer spriteRenderer)
     {
-        BoxCollider2D mainColl = this.GetComponent<BoxCollider2D>();
-        BoxCollider2D leftSideColl = this.GetComponent<BoxCollider2D>();
-        BoxCollider2D rightSidColl = this.GetComponent<BoxCollider2D>();
+        //Removing old coliders
+        BoxCollider2D[] colliders = this.GetComponents<BoxCollider2D>();
+
+        foreach(var collider in colliders)
+        {
+            Destroy(collider);
+        }
+
+        BoxCollider2D mainColl;
+        BoxCollider2D leftSideColl;
+        BoxCollider2D rightSidColl;
+
         PhysicsMaterial2D platformMaterial =   Resources.Load<PhysicsMaterial2D>("Materials/Platform_Main");
         PhysicsMaterial2D platformSideMaterial =  Resources.Load<PhysicsMaterial2D>("Materials/Platform_Side");
 
-        if (mainColl == null)
-        {
-            mainColl = this.gameObject.AddComponent(typeof(BoxCollider2D)) as BoxCollider2D;
-            mainColl.sharedMaterial = platformMaterial;
-        }
-          
-        if (leftSideColl == null)
-        {
-            leftSideColl = this.gameObject.AddComponent(typeof(BoxCollider2D)) as BoxCollider2D;
-            leftSideColl.sharedMaterial = platformSideMaterial;
-        }
-          
-        if (rightSidColl == null)
-        {
-            rightSidColl = this.gameObject.AddComponent(typeof(BoxCollider2D)) as BoxCollider2D;
-            rightSidColl.sharedMaterial = platformSideMaterial;
-        }
+     
+        mainColl = this.gameObject.AddComponent(typeof(BoxCollider2D)) as BoxCollider2D;
+        leftSideColl = this.gameObject.AddComponent(typeof(BoxCollider2D)) as BoxCollider2D;
+        rightSidColl = this.gameObject.AddComponent(typeof(BoxCollider2D)) as BoxCollider2D;
+       
+        mainColl.sharedMaterial = platformMaterial;
+        leftSideColl.sharedMaterial = platformSideMaterial;
+        rightSidColl.sharedMaterial = platformSideMaterial;
 
         mainColl.size = spriteRenderer.size;
         mainColl.offset = 0.5f * spriteRenderer.size.y * Vector2.up;

@@ -26,8 +26,11 @@ public class PlatformManager : MonoBehaviour
 
 	void Start ()
     {
+        if (!player)
+            player =GameObject.Find("CharacterRobotBoy").transform;
+
         InstantiatePlatformSections();
-        BuildInitialLevel();
+        BuildInitialLevel();       
 	}
 
     private void InstantiatePlatformSections()

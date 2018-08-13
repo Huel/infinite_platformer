@@ -34,7 +34,7 @@ namespace UnityStandardAssets._2D
 
 			 mainCameraTransform = mainCamera.GetComponent<Transform>();
 
-			playerLives = GameConstants.PLAYER_LIVES;
+			playerLives = GameplayConstants.PLAYER_LIVES;
 		}
 		
 		// Update is called once per frame
@@ -44,17 +44,17 @@ namespace UnityStandardAssets._2D
 
 			if(playerController.GetFacingRight())
 			{
-				newPositionX += GameConstants.CAMERA_OFFSET;
+				newPositionX += GameplayConstants.CAMERA_OFFSET;
 			}
 			else
-				newPositionX -=GameConstants.CAMERA_OFFSET;
+				newPositionX -=GameplayConstants.CAMERA_OFFSET;
 
 			Vector3 targetPosition = new Vector3(newPositionX,playerCharacterTransform.position.y,mainCameraTransform.gameObject.transform.position.z);
-			mainCameraTransform.position = Vector3.SmoothDamp(mainCameraTransform.position,targetPosition,ref velocity,GameConstants.CAMERA_SMOOTH_TIME);
+			mainCameraTransform.position = Vector3.SmoothDamp(mainCameraTransform.position,targetPosition,ref velocity,GameplayConstants.CAMERA_SMOOTH_TIME);
 		}
 		public void RespawnPlayer()
 		{
-			playerCharacter.transform.position = new Vector3 (playerCharacter.transform.position.x,GameConstants.PLAYER_RESPAWN_HIGHT,0.0f);
+			playerCharacter.transform.position = new Vector3 (playerCharacter.transform.position.x,GameplayConstants.PLAYER_RESPAWN_HIGHT,0.0f);
 			playerCharacter.gameObject.GetComponent<PlatformerCharacter2D>().Move(0.0f,false,false,true);
 		}
 	}

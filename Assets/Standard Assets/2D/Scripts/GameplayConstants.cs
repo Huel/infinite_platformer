@@ -25,4 +25,10 @@ public class GameplayConstants : ScriptableObject
     public const string TAG_KillZone = "KillZone";
     public const string TAG_Player = "Player";
     public const string TAG_WakeField = "WakeField";
+
+    public const int PLAYER_LIVES = 5;
+    public const float PLAYER_RESPAWN_HIGHT= 10.0f;
+    public const float CAMERA_OFFSET = 2.0f;
+    public const float CAMERA_SMOOTH_TIME = 0.5f;
+   
 }
