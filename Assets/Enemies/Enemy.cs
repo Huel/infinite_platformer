@@ -13,11 +13,13 @@ public class Enemy : MonoBehaviour
 	{
 		rb = this.GetComponent<Rigidbody2D>();
 	}
-
+		
 	private void Update() 
 	{
-		
+		if(this.gameObject.transform.position.y < -10)
+			Destroy(this.gameObject);
 	}
+
 	private void OnCollisionEnter2D(Collision2D other) 
 	{
 		if(other.gameObject.tag == GameplayConstants.TAG_Player)
@@ -27,7 +29,7 @@ public class Enemy : MonoBehaviour
 
 			if(health<0)
 				killEnemy();		
-		}	
+		}
 	}
 
 	private void killEnemy()
