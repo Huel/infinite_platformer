@@ -1,5 +1,4 @@
-﻿
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,7 +6,6 @@ public class PlatformManager : MonoBehaviour
 {
     public GameObject[] platformPrefabs;
     public Transform player;
-    public EnemyManager enemyManager;
     public float jumpDistance = 10f;
 
     [Tooltip("Scale of a normal jump that's considered easy.")]
@@ -25,19 +23,13 @@ public class PlatformManager : MonoBehaviour
     private PlatformSection[] platformSections;
     private int[] currentSections;
     private float currentEndDistance = GameplayConstants.START_DISTANCE;
+    private EnemyManager enemyManager;
 
 	void Start ()
     {
-        if (!player)
-            player = GameObject.Find("CharacterRobotBoy").transform;
-
-        if (!enemyManager)
-            enemyManager = this.gameObject.GetComponent<EnemyManager>();
-
-        enemyManager.SpawnEnemy(new Vector3(3.0f,5.0f,1.0f));
-
+        enemyManager = this.GetComponent<EnemyManager>();
         InstantiatePlatformSections();
-        BuildInitialLevel();       
+        BuildInitialLevel();
 	}
 
     private void InstantiatePlatformSections()
@@ -70,6 +62,20 @@ public class PlatformManager : MonoBehaviour
         for (int i = 0; i < GameplayConstants.MAXIMUM_SECTIONS - 2; i++)
         {
             platformSections[currentSections[i]].SetAlreadyActivated();
+        }
+
+        WakeActiveEnemies();
+    }
+
+    private static void WakeActiveEnemies()
+    {
+        Enemy[] enemies = FindObjectsOfType<Enemy>();
+        foreach (Enemy obj in enemies)
+        {
+            if (obj.gameObject.activeInHierarchy)
+            {
+                obj.WakeUp();
+            }
         }
     }
 
@@ -124,6 +130,9 @@ public class PlatformManager : MonoBehaviour
         float jumpScalar = GetJumpScalar();
 
         currentEndDistance = newPlatform.MoveAndActivate(currentEndDistance + jumpScalar * jumpDistance);
+
+        SpawnGroundEnemies(newPlatform);
+        SpawnFlyingEnemies(jumpScalar);
     }
 
     private float GetJumpScalar()
@@ -131,5 +140,27 @@ public class PlatformManager : MonoBehaviour
         float percentAlongScale = Mathf.InverseLerp(easyDistance, hardDistance, player.position.x);
         float difficultyScale = Mathf.Lerp(easyDistanceScale, hardDistanceScale, percentAlongScale);
         return difficultyScale;
+    }
+
+    private void SpawnGroundEnemies(PlatformSection newPlatform)
+    {
+        Vector3[] enemyPositions = newPlatform.GetEnemySpawnPoints(Random.Range(1, 4));
+        if (enemyPositions != null)
+        {
+            for (int i = 0; i < enemyPositions.Length; i++)
+            {
+                enemyManager.SpawnGroundEnemy(enemyPositions[i]);
+            }
+        }
+    }
+
+    private void SpawnFlyingEnemies(float chance)
+    {
+        if (Random.Range(0f, 1f) < chance)
+        {
+            Vector3 position = new Vector3(currentEndDistance + 0.5f * chance * jumpDistance, 5f, 0f);
+
+            enemyManager.SpawnAirEnemy(position);
+        }
     }
 }

@@ -1,15 +1,12 @@
 ﻿using UnityEngine;
-using UnityEditor;
 
 public class Platform : MonoBehaviour
 {
 	void Awake()
 	{
-        this.tag = GameplayConstants.TAG_Ground;    // If you get an error here, create a Tag in Unity called "Ground".
-        //See the GameplayConstants.cs file for other required Tags and Layers.
+        this.tag = GameplayConstants.TAG_Ground;
         
-        SpriteRenderer spriteRenderer = this.GetComponent<SpriteRenderer>();
-
+        SpriteRenderer spriteRenderer = this.GetComponent<SpriteRenderer> ();
 		if (spriteRenderer != null)
 		{
             MatchColliderToSpriteSize(spriteRenderer);
@@ -18,37 +15,26 @@ public class Platform : MonoBehaviour
 
     private void MatchColliderToSpriteSize(SpriteRenderer spriteRenderer)
     {
-        //Removing old coliders
-        BoxCollider2D[] colliders = this.GetComponents<BoxCollider2D>();
-
-        foreach(var collider in colliders)
+        BoxCollider2D coll = this.GetComponent<BoxCollider2D>();
+        if (coll == null)
         {
-            Destroy(collider);
+            coll = this.gameObject.AddComponent(typeof(BoxCollider2D)) as BoxCollider2D;
         }
 
-        BoxCollider2D mainColl;
-        BoxCollider2D leftSideColl;
-        BoxCollider2D rightSidColl;
+        coll.size = spriteRenderer.size - 2f * GameplayConstants.SLIP_ZONE_WIDTH * Vector2.right;
+        coll.offset = 0.5f * spriteRenderer.size.y * Vector2.up;
 
-        PhysicsMaterial2D platformMaterial =   Resources.Load<PhysicsMaterial2D>("Materials/Platform_Main");
-        PhysicsMaterial2D platformSideMaterial =  Resources.Load<PhysicsMaterial2D>("Materials/Platform_Side");
+        AddSlipSide(spriteRenderer, true);
+        AddSlipSide(spriteRenderer, false);
+    }
 
-     
-        mainColl = this.gameObject.AddComponent(typeof(BoxCollider2D)) as BoxCollider2D;
-        leftSideColl = this.gameObject.AddComponent(typeof(BoxCollider2D)) as BoxCollider2D;
-        rightSidColl = this.gameObject.AddComponent(typeof(BoxCollider2D)) as BoxCollider2D;
-       
-        mainColl.sharedMaterial = platformMaterial;
-        leftSideColl.sharedMaterial = platformSideMaterial;
-        rightSidColl.sharedMaterial = platformSideMaterial;
-
-        mainColl.size = spriteRenderer.size;
-        mainColl.offset = 0.5f * spriteRenderer.size.y * Vector2.up;
-
-        leftSideColl.size = new Vector2( 0.1f , spriteRenderer.size.y );
-        leftSideColl.offset = new Vector2(-0.5f * spriteRenderer.size.x,0.5f * spriteRenderer.size.y);
-
-        rightSidColl.size = new Vector2( 0.1f , spriteRenderer.size.y );
-        rightSidColl.offset = new Vector2(0.5f * spriteRenderer.size.x,0.5f * spriteRenderer.size.y);
+    private void AddSlipSide(SpriteRenderer spriteRenderer, bool isLeft)
+    {
+        PhysicsMaterial2D slipMaterial = (PhysicsMaterial2D)Resources.Load("SlipSurface", typeof(PhysicsMaterial2D));
+        
+        BoxCollider2D coll = this.gameObject.AddComponent<BoxCollider2D>();
+        coll.size = new Vector2(GameplayConstants.SLIP_ZONE_WIDTH, spriteRenderer.size.y);
+        coll.offset = new Vector2((isLeft ? -0.5f : 0.5f) * (spriteRenderer.size.x - GameplayConstants.SLIP_ZONE_WIDTH), 0.5f * spriteRenderer.size.y);
+        coll.sharedMaterial = slipMaterial;
     }
 }
