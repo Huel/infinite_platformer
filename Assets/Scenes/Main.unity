@@ -127,6 +127,7 @@ GameObject:
   - component: {fileID: 75107495}
   - component: {fileID: 75107494}
   - component: {fileID: 75107496}
+  - component: {fileID: 75107497}
   m_Layer: 0
   m_Name: PlayManager
   m_TagString: Untagged
@@ -165,6 +166,7 @@ MonoBehaviour:
   - {fileID: 1200204008843422, guid: 2069a825dd03ffd4aa55a38754d6de54, type: 2}
   - {fileID: 1553255139050690, guid: 7ea111bf5ea901e4eb4cc7245a46faf2, type: 2}
   player: {fileID: 0}
+  enemyManager: {fileID: 0}
   jumpDistance: 8
   easyDistanceScale: 0.5
   hardDistanceScale: 1.75
@@ -181,7 +183,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &75107496
 MonoBehaviour:
@@ -197,6 +199,19 @@ MonoBehaviour:
   playerCharacter: {fileID: 57848172}
   playerLives: 0
   mainCamera: {fileID: 0}
+--- !u!114 &75107497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 75107493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f14d799647b55340b19e0fb68634b36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EnemyPrefabsList:
+  - {fileID: 1652851515399514, guid: 7ea17db6cca036147a9311449fce241d, type: 2}
 --- !u!1001 &775585762
 Prefab:
   m_ObjectHideFlags: 0
@@ -234,7 +249,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: a038b284634e29f4aaf058814aa61a6f, type: 2}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: a038b284634e29f4aaf058814aa61a6f, type: 2}
       propertyPath: playManager
@@ -384,7 +399,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1771787303
 Prefab:
@@ -423,7 +438,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4194254215070968, guid: a4685a47f52b4204785f5425db38b62f, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a4685a47f52b4204785f5425db38b62f, type: 2}

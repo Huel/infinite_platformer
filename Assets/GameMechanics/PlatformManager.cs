@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +7,7 @@ public class PlatformManager : MonoBehaviour
 {
     public GameObject[] platformPrefabs;
     public Transform player;
+    public EnemyManager enemyManager;
     public float jumpDistance = 10f;
 
     [Tooltip("Scale of a normal jump that's considered easy.")]
@@ -27,7 +29,12 @@ public class PlatformManager : MonoBehaviour
 	void Start ()
     {
         if (!player)
-            player =GameObject.Find("CharacterRobotBoy").transform;
+            player = GameObject.Find("CharacterRobotBoy").transform;
+
+        if (!enemyManager)
+            enemyManager = this.gameObject.GetComponent<EnemyManager>();
+
+        enemyManager.SpawnEnemy(new Vector3(3.0f,5.0f,1.0f));
 
         InstantiatePlatformSections();
         BuildInitialLevel();       
